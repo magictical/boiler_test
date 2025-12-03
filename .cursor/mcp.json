@@ -1,23 +1,23 @@
 {
   "mcpServers": {
+    "supabase": {
+      "command": "npx",
+      "args": ["-y", "@supabase/mcp-server-supabase@latest", "--read-only", "--project-ref=woutpynonkzqvrowmels"],
+      "env": {
+        "SUPABASE_ACCESS_TOKEN": "sbp_1df7a0860862611a9ed9a7f0e03bcc1251c395cb"
+      }
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp@latest", "--api-key", "ctx7sk-d921a834-92ce-48e5-ac36-3bb947d1d345"]
+    },
     "sequential-thinking": {
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
     },
-    "context7": {
-      "command": "npx",
-      "args": ["-y", "@upstash/context7-mcp"]
-    },
     "chrome-devtools": {
       "command": "npx",
       "args": ["-y", "chrome-devtools-mcp@latest"]
-    },
-    "supabase": {
-      "command": "npx",
-      "args": ["-y", "@supabase/mcp-server-supabase@latest", "--read-only", "--project-ref=<project-ref>"],
-      "env": {
-        "SUPABASE_ACCESS_TOKEN": "<personal-access-token>"
-      }
     },
     "tosspayments-integration-guide": {
       "command": "npx",
