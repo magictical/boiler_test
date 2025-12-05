@@ -30,8 +30,8 @@
   - [x] Clerk 연동 (로그인/회원가입, 미들웨어 보호)
   - [x] 기본 레이아웃/네비게이션 구성 (`app/layout.tsx`, `components/Navbar.tsx`)
   - [x] Supabase 프로젝트 연결 및 환경변수 세팅 (`.env.local`)
-  - [ ] DB 스키마 준비: `products`, `cart_items`, `orders`, `order_items` (개발 환경 RLS 비활성화)
-  - [ ] 마이그레이션 작성/적용 (`supabase/migrations/*`)
+  - [x] DB 스키마 준비: `products`, `cart_items`, `orders`, `order_items` (개발 환경 RLS 비활성화)
+  - [x] 마이그레이션 작성/적용 (`supabase/migrations/*`)
 
 - [ ] Phase 2: 상품 기능
 
