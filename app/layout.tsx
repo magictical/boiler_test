@@ -18,8 +18,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SaaS 템플릿",
-  description: "Next.js + Clerk + Supabase 보일러플레이트",
+  title: "쇼핑몰 - 다양한 상품을 만나보세요",
+  description: "최신 트렌드와 다양한 카테고리의 상품을 한 곳에서 쇼핑하세요. 안전한 결제와 빠른 배송을 제공합니다.",
 };
 
 export default function RootLayout({
@@ -32,7 +32,6 @@ export default function RootLayout({
       <html lang="ko">
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-          suppressHydrationWarning
         >
           <SyncUserProvider>
             <Navbar />

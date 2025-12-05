@@ -43,8 +43,8 @@
 - [ ] Phase 3: 장바구니 & 주문
 
   - [x] 장바구니 담기/삭제/수량 변경 (`cart_items` 연동, Server Actions)
-  - [x] 주문 생성 흐름(주소/메모 입력 포함)
-  - [x] 주문테이블 저장(`orders`, `order_items`) 및 합계 검증
+  - [ ] 주문 생성 흐름(주소/메모 입력 포함)
+  - [ ] 주문테이블 저장(`orders`, `order_items`) 및 합계 검증
 
 - [ ] Phase 4: 결제 통합 (Toss Payments 테스트 모드)
 
