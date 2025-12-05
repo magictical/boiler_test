@@ -32,7 +32,7 @@ export default async function CartPage() {
 
   const totalAmount =
     cartItems?.reduce((sum, item) => sum + item.products.price * item.quantity, 0) || 0;
-  const shippingFee = totalAmount >= 50000 || totalAmount === 0 ? 0 : 3000;
+  const shippingFee = totalAmount >= 50000 ? 0 : 3000;
   const finalAmount = totalAmount + shippingFee;
 
   return (

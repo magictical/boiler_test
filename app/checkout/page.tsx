@@ -6,22 +6,22 @@
  * 배송 정보 입력과 주문 요약을 표시합니다.
  */
 
-import React from 'react';
-import { redirect } from 'next/navigation';
-import Link from 'next/link';
-import { auth } from '@clerk/nextjs/server';
-import { getCart } from '@/actions/cart';
-import OrderForm from '@/components/OrderForm';
-import OrderSummary from '@/components/OrderSummary';
-import { Button } from '@/components/ui/button';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { ShoppingCartIcon } from 'lucide-react';
+import React from "react";
+import { redirect } from "next/navigation";
+import Link from "next/link";
+import { auth } from "@clerk/nextjs/server";
+import { getCart } from "@/actions/cart";
+import OrderForm from "@/components/OrderForm";
+import OrderSummary from "@/components/OrderSummary";
+import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { ShoppingCartIcon } from "lucide-react";
 
 export default async function CheckoutPage() {
   // 로그인 확인
   const { userId } = auth();
   if (!userId) {
-    redirect('/sign-in');
+    redirect("/sign-in");
   }
 
   // 장바구니 조회
@@ -64,7 +64,10 @@ export default async function CheckoutPage() {
   }
 
   // 상품 금액 계산
-  const totalAmount = cartItems.reduce((sum, item) => sum + item.products.price * item.quantity, 0);
+  const totalAmount = cartItems.reduce(
+    (sum, item) => sum + item.products.price * item.quantity,
+    0,
+  );
   const shippingFee = totalAmount >= 50000 ? 0 : 3000;
   const finalAmount = totalAmount + shippingFee;
 
@@ -74,11 +77,17 @@ export default async function CheckoutPage() {
         {/* 헤더 */}
         <div className="mb-8">
           <nav className="mb-4 flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-            <Link href="/" className="hover:text-gray-700 dark:hover:text-gray-300">
+            <Link
+              href="/"
+              className="hover:text-gray-700 dark:hover:text-gray-300"
+            >
               홈
             </Link>
             <span>/</span>
-            <Link href="/cart" className="hover:text-gray-700 dark:hover:text-gray-300">
+            <Link
+              href="/cart"
+              className="hover:text-gray-700 dark:hover:text-gray-300"
+            >
               장바구니
             </Link>
             <span>/</span>
