@@ -180,13 +180,15 @@ export default async function CartPage() {
                 )}
 
                 {/* 주문하기 버튼 */}
-                <Button
-                  className="mt-6 w-full"
-                  size="lg"
-                  disabled={totalAmount === 0}
-                >
-                  주문하기
-                </Button>
+                <Link href="/checkout" className="block">
+                  <Button
+                    className="mt-6 w-full"
+                    size="lg"
+                    disabled={totalAmount === 0}
+                  >
+                    주문하기
+                  </Button>
+                </Link>
 
                 {/* 쇼핑 계속하기 */}
                 <Link href="/products" className="block mt-3">
