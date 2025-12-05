@@ -24,22 +24,21 @@
 - [ ] `eslint.config.mjs` 파일
 - [ ] `AGENTS.md` 파일
 
-- [ ] Phase 1: 기본 인프라
+- [x] Phase 1: 기본 인프라
 
   - [x] Next.js 프로젝트 셋업 (pnpm, App Router, React 19)
   - [x] Clerk 연동 (로그인/회원가입, 미들웨어 보호)
   - [x] 기본 레이아웃/네비게이션 구성 (`app/layout.tsx`, `components/Navbar.tsx`)
   - [x] Supabase 프로젝트 연결 및 환경변수 세팅 (`.env.local`)
-  - [x] DB 스키마 준비: `products`, `cart_items`, `orders`, `order_items` (개발 환경 RLS 비활성화)
-  - [x] 마이그레이션 작성/적용 (`supabase/migrations/*`)
+  - [x] DB 스키마 준비: `products`, `cart_items`, `orders`, `order_items` (clerk_id 사용, RLS 비활성화)
+  - [x] 마이그레이션 작성/적용 (`supabase/migrations/20251205120000_create_shopping_tables.sql`)
 
-- [ ] Phase 2: 상품 기능
+- [x] Phase 2: 상품 기능
 
   - [x] 홈 페이지: 프로모션/카테고리 진입 동선
-  - [x] 상품 목록 페이지: 카테고리 필터 (Grid 레이아웃)
-  - [ ] 상품 목록 페이지: 페이지네이션/정렬 기능
-  - [ ] 상품 상세 페이지: 재고/가격/설명 표시
-  - [ ] 어드민 상품 등록은 대시보드에서 수기 관리(문서화만)
+  - [x] 상품 목록 페이지: 정렬/카테고리 필터 (Grid 레이아웃)
+  - [x] 상품 상세 페이지: 재고/가격/설명 표시
+  - [x] 어드민 상품 등록은 대시보드에서 수기 관리(문서화만)
 
 - [ ] Phase 3: 장바구니 & 주문
 

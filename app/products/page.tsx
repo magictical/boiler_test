@@ -7,6 +7,8 @@
  * 주요 기능:
  * - 반응형 Grid 레이아웃 (모바일 1열, 태블릿 2열, 데스크톱 3-4열)
  * - 카테고리 필터링 (URL 쿼리 파라미터)
+ * - 정렬 기능 (가격순, 최신순, 이름순)
+ * - is_active 필터링 (비활성 상품 제외)
  * - 로딩/에러/빈 상태 처리
  *
  * @dependencies
@@ -26,24 +28,52 @@ function getSupabaseClient() {
   return createClient(supabaseUrl, supabaseAnonKey);
 }
 
+// 정렬 옵션 정의
+const SORT_OPTIONS = [
+  { id: "newest", label: "최신순" },
+  { id: "price_asc", label: "가격 낮은순" },
+  { id: "price_desc", label: "가격 높은순" },
+  { id: "name", label: "이름순" },
+] as const;
+
+type SortOption = (typeof SORT_OPTIONS)[number]["id"];
+
 interface ProductsPageProps {
-  searchParams: Promise<{ category?: string }>;
+  searchParams: Promise<{ category?: string; sort?: string }>;
 }
 
 export default async function ProductsPage({ searchParams }: ProductsPageProps) {
   const params = await searchParams;
   const selectedCategory = params.category;
+  const selectedSort = (params.sort as SortOption) || "newest";
 
   // Supabase에서 상품 조회
   const supabase = getSupabaseClient();
   let query = supabase
     .from("products")
     .select("*")
-    .order("created_at", { ascending: false });
+    .eq("is_active", true); // 활성 상품만 조회
 
   // 카테고리 필터링
   if (selectedCategory) {
     query = query.eq("category", selectedCategory);
+  }
+
+  // 정렬 적용
+  switch (selectedSort) {
+    case "price_asc":
+      query = query.order("price", { ascending: true });
+      break;
+    case "price_desc":
+      query = query.order("price", { ascending: false });
+      break;
+    case "name":
+      query = query.order("name", { ascending: true });
+      break;
+    case "newest":
+    default:
+      query = query.order("created_at", { ascending: false });
+      break;
   }
 
   const { data: products, error } = await query;
@@ -72,6 +102,23 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
     ? PRODUCT_CATEGORIES.find((c) => c.id === selectedCategory)?.label
     : null;
 
+  // 정렬 링크 생성 함수
+  const getSortUrl = (sortId: string) => {
+    const params = new URLSearchParams();
+    if (selectedCategory) params.set("category", selectedCategory);
+    params.set("sort", sortId);
+    return `/products?${params.toString()}`;
+  };
+
+  // 카테고리 링크 생성 함수
+  const getCategoryUrl = (categoryId?: string) => {
+    const params = new URLSearchParams();
+    if (categoryId) params.set("category", categoryId);
+    if (selectedSort && selectedSort !== "newest") params.set("sort", selectedSort);
+    const queryString = params.toString();
+    return queryString ? `/products?${queryString}` : "/products";
+  };
+
   return (
     <main className="min-h-[calc(100vh-80px)]">
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
@@ -86,20 +133,44 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
               {categoryLabel ?? "전체 상품"}
             </span>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
-            {categoryLabel ?? "전체 상품"}
-          </h1>
-          {products && (
-            <p className="mt-2 text-gray-600 dark:text-gray-400">
-              총 {products.length}개의 상품
-            </p>
-          )}
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+                {categoryLabel ?? "전체 상품"}
+              </h1>
+              {products && (
+                <p className="mt-1 text-gray-600 dark:text-gray-400">
+                  총 {products.length}개의 상품
+                </p>
+              )}
+            </div>
+
+            {/* 정렬 옵션 */}
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-gray-500 dark:text-gray-400">정렬:</span>
+              <div className="flex gap-1">
+                {SORT_OPTIONS.map((option) => (
+                  <Link
+                    key={option.id}
+                    href={getSortUrl(option.id)}
+                    className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
+                      selectedSort === option.id
+                        ? "bg-gray-900 text-white dark:bg-gray-100 dark:text-gray-900"
+                        : "bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700"
+                    }`}
+                  >
+                    {option.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* 카테고리 필터 */}
         <div className="mb-8 flex flex-wrap gap-2">
           <Link
-            href="/products"
+            href={getCategoryUrl()}
             className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
               !selectedCategory
                 ? "bg-indigo-600 text-white"
@@ -111,7 +182,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
           {PRODUCT_CATEGORIES.map((category) => (
             <Link
               key={category.id}
-              href={`/products?category=${category.id}`}
+              href={getCategoryUrl(category.id)}
               className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
                 selectedCategory === category.id
                   ? "bg-indigo-600 text-white"
@@ -157,4 +228,3 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
     </main>
   );
 }
-
