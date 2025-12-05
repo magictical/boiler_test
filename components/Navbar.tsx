@@ -10,13 +10,15 @@ const Navbar = () => {
         🛍️ 쇼핑몰
       </Link>
       <div className="flex gap-4 items-center">
+        {/* 로그인되지 않은 사용자에게만 SignIn 버튼 표시 */}
         <SignedOut>
-          <SignInButton mode="modal">
+          <SignInButton mode="modal" fallbackRedirectUrl="/">
             <Button>로그인</Button>
           </SignInButton>
         </SignedOut>
+        {/* 로그인된 사용자에게만 UserButton 표시 */}
         <SignedIn>
-          <UserButton />
+          <UserButton afterSignOutUrl="/" />
         </SignedIn>
       </div>
     </header>
