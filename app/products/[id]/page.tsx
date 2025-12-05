@@ -16,8 +16,9 @@
 import { createClient } from "@supabase/supabase-js";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { Product, PRODUCT_CATEGORIES } from "@/types/product";
+import { PRODUCT_CATEGORIES } from "@/types/product";
 import { Button } from "@/components/ui/button";
+import AddToCartButton from "@/components/AddToCartButton";
 
 // Supabase 클라이언트 생성 (서버 사이드)
 function getSupabaseClient() {
@@ -162,13 +163,11 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
 
             {/* 구매 버튼 */}
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-              <Button
-                size="lg"
-                className="flex-1"
+              <AddToCartButton
+                productId={product.id}
                 disabled={isOutOfStock}
-              >
-                {isOutOfStock ? "품절된 상품입니다" : "장바구니에 담기"}
-              </Button>
+                className="flex-1"
+              />
               <Button
                 size="lg"
                 variant="outline"

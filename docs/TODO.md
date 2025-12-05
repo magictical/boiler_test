@@ -42,7 +42,7 @@
 
 - [ ] Phase 3: 장바구니 & 주문
 
-  - [ ] 장바구니 담기/삭제/수량 변경 (`cart_items` 연동)
+  - [x] 장바구니 담기/삭제/수량 변경 (`cart_items` 연동, Server Actions)
   - [ ] 주문 생성 흐름(주소/메모 입력 포함)
   - [ ] 주문테이블 저장(`orders`, `order_items`) 및 합계 검증
 
